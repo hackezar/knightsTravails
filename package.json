@@ -1,0 +1,39 @@
+{
+  "name": "webpack_eslist_prettier_template",
+  "version": "1.0.0",
+  "description": "A template for new projects. This template contains webpack, eslist, and prettier",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode=development",
+    "prod": "webpack --mode=production",
+    "deploy": "gh-pages -d dist",
+    "watch": "npx webpack --watch",
+    "start": "webpack serve --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.10.0",
+    "css-minimizer-webpack-plugin": "^6.0.0",
+    "csv-loader": "^3.0.5",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.7.7",
+    "prettier": "3.2.4",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2",
+    "xml-loader": "^1.2.1"
+  },
+  "dependencies": {
+    "css": "^3.0.0",
+    "loader": "^2.1.1",
+    "lodash": "^4.17.21"
+  }
+}
