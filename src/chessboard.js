@@ -1,4 +1,4 @@
-import { nextMove } from "./nextMove";
+import { forEach } from "lodash";
 
 export class Square {
   constructor(x, y){
@@ -13,6 +13,7 @@ export class Square {
 export function Board() {
   return {
     board: generateSquares(),
+    moves: [],
     getSquare(xval, yval) {
       const filter = this.board.filter(board => board.x == xval && board.y == yval);
       if(filter.length == 1)
@@ -20,15 +21,59 @@ export function Board() {
       else
         return console.log('No Squares Found');
     },
+    breadthFirstSearch(current, stop) {
+      let result = [];
+      //0 Moves
+      if (current[0].x == stop[0].x && current[0].y == stop[0].y)
+        return console.log("Knight Does not need to move");
+      result.push(current[0]);
+      // Try in 1 move
+      function loop (current, stop, result){
+        console.log(current);
+        for(let i=0; i<current[0].possibleMoves.length; i++){
+          if (current[0].possibleMoves[i][0].x == stop[0].x && current[0].possibleMoves[i][0].y == stop[0].y){
+            console.log(current[0].possibleMoves[i]);
+            result.push(current[0].possibleMoves[i]);
+            return result;
+            }
+          }
+        }
+        result = loop(current, stop, result);
+        console.log(result);
+        if (result[0].x != stop[0].x && result[0].y != stop[0].y) {
+          // Try in 2 moves
+          for (let i=0; i<current[0].possibleMoves[i]; i++){
+            for (let j=0; j<current[0].possibleMoves[i].possibleMoves[j]; j++) {
+              loop(current[0].possibleMoves[i].possibleMoves[j]);
+            }
+          }
+      }
+     
+      return result;
+    },
     knightMoves(start, stop) {
+      let count = -1;
       let startingSquare = this.getSquare(start[0], start[1]);
       let endSquare = this.getSquare(stop[0], stop[1]);
-      console.log(`Knight Starts at: ${start}`);
-      let move = nextMove(startingSquare, endSquare);
-      console.log(move);
+      let result = this.breadthFirstSearch(startingSquare, endSquare);
+      console.log(result);
+      if (result.length == 1)
+        console.log(`Knight Reaches [${result[0].x}, ${result[0].y}] in 1 move.`)
+      for (let i=0; i<result.length; i++){
+        console.log(result);
+        count++;
+        if (i == 0)
+          console.log(`Knight starts at: (${result[i].x}, ${result[i].y})`);
+        else if(i == result.length - 1)
+          console.log(`Knight ends at: (${result[i][0].x}, ${result[i][0].y}), in ${count} moves`);
+        else{
+          console.log(`Knight moves to: (${result[i][0].x}, ${result[i][0].y}})`);
+        }
+      } 
     }
   }
 }
+
 
 export function generateSquares () {
   let board = [];
@@ -55,9 +100,10 @@ export function possibleMoves(square, app){
   moves.push(move1), moves.push(move2), moves.push(move3), moves.push(move4), moves.push(move5), moves.push(move6), moves.push(move7), moves.push(move8);
   for (let i=0; i<moves.length; i++) {
     let moveSquare;
-    if (moves[i][0] <=7 && moves[i][0] >= 0 && moves[i][1]<=7 && moves[i][1]>=0)
+    if (moves[i][0] <=7 && moves[i][0] >= 0 && moves[i][1]<=7 && moves[i][1]>=0) {
       moveSquare = app.getSquare(moves[i][0], moves[i][1]);
-      square.possibleMoves.push(moves[i]);
+      square.possibleMoves.push(moveSquare);
+    }
   }
   return square;
 }

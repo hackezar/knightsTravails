@@ -12,4 +12,4 @@ app.getSquare(0, 4);
 addPossibleMovesToEachSquare(app);
 console.log(app);
 
-app.knightMoves([3, 3], [4,5]);
+app.knightMoves([3, 3], [5,7]);
